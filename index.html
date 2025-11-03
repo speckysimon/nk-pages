@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Avatar Documentation Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .intro {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            border-left: 5px solid #667eea;
+        }
+
+        .intro h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge.recommended {
+            background: #c8e6c9;
+            color: #388e3c;
+        }
+
+        .badge.troubleshooting {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .badge.setup {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+            transform: translateX(5px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #f8f9fa;
+        }
+
+        .quick-start {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+
+        .quick-start h2 {
+            color: white;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .quick-start ol {
+            margin-left: 25px;
+            line-height: 2;
+            font-size: 1.1em;
+        }
+
+        .quick-start li {
+            margin-bottom: 10px;
+        }
+
+        .comparison-table {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .status-tested {
+            background: #4caf50;
+        }
+
+        .status-research {
+            background: #ff9800;
+        }
+
+        .status-new {
+            background: #2196f3;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🤖 AI Avatar Documentation Portal</h1>
+            <p>Complete guide to implementing interactive AI avatars for language learning</p>
+        </header>
+
+        <div class="content">
+            <div class="intro">
+                <h2>📚 Welcome to Your Avatar Integration Hub</h2>
+                <p>
+                    This documentation portal contains everything you need to implement an interactive AI-powered
+                    avatar for your online language school. Whether you're troubleshooting existing platforms
+                    (SitePal, HeyGen) or exploring new alternatives, you'll find detailed guides, code examples,
+                    and step-by-step instructions here.
+                </p>
+            </div>
+
+            <div class="quick-start">
+                <h2>🚀 Quick Start Guide</h2>
+                <p><strong>New to this project? Start here:</strong></p>
+                <ol>
+                    <li>Read the <strong>Alternative Platforms</strong> document to understand your options</li>
+                    <li>Review the <strong>Comparison Table</strong> below to choose the best fit</li>
+                    <li>Follow the <strong>Voki + Chatbase Setup Guide</strong> for implementation</li>
+                    <li>Use troubleshooting guides if you're working with SitePal or HeyGen</li>
+                    <li>Test your integration in slides.com before production</li>
+                </ol>
+            </div>
+
+            <!-- Main Documentation -->
+            <div class="section">
+                <h2>📖 Core Documentation</h2>
+                <div class="cards">
+                    <div class="card" onclick="window.location.href='Alternative_Avatar_Platforms.html'">
+                        <div class="card-icon">🔍</div>
+                        <div class="card-meta">
+                            <span class="badge recommended">⭐ Recommended</span>
+                            <span class="badge">Research</span>
+                        </div>
+                        <h3>Alternative Avatar Platforms</h3>
+                        <p>
+                            Comprehensive research on 7+ platforms beyond SitePal and HeyGen. Includes detailed
+                            comparison, pricing, features, and recommendations for real-time AI avatars with
+                            cartoon character support.
+                        </p>
+                        <p><strong>Top 3 Recommendations:</strong></p>
+                        <ul style="margin-left: 20px; margin-bottom: 15px; color: #666;">
+                            <li>Convai + Unity WebGL</li>
+                            <li>Voki (Education-focused)</li>
+                            <li>TalkingHead.js + GPT-4 (Open-source)</li>
+                        </ul>
+                        <div class="links">
+                            <a href="Alternative_Avatar_Platforms.html" class="btn">Read Full Guide</a>
+                            <a href="Alternative_Avatar_Platforms.md" class="btn btn-secondary" download>Download MD</a>
+                        </div>
+                    </div>
+
+                    <div class="card" onclick="window.location.href='Voki_Chatbase_Setup_Guide.html'">
+                        <div class="card-icon">⚙️</div>
+                        <div class="card-meta">
+                            <span class="badge setup">Setup Guide</span>
+                            <span class="badge">Step-by-Step</span>
+                        </div>
+                        <h3>Voki + Chatbase Integration</h3>
+                        <p>
+                            Complete tutorial for setting up Voki avatar with Chatbase AI backend. Includes
+                            3 different approaches, full code examples, deployment instructions, and language
+                            level configuration for A1-B2 learners.
+                        </p>
+                        <p><strong>Includes:</strong></p>
+                        <ul style="margin-left: 20px; margin-bottom: 15px; color: #666;">
+                            <li>Chatbase chatbot setup</li>
+                            <li>Custom avatar integration</li>
+                            <li>Speech recognition & TTS</li>
+                            <li>Slides.com embedding</li>
+                        </ul>
+                        <div class="links">
+                            <a href="Voki_Chatbase_Setup_Guide.html" class="btn">Read Setup Guide</a>
+                            <a href="Voki_Chatbase_Setup_Guide.md" class="btn btn-secondary" download>Download MD</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troubleshooting Guides -->
+            <div class="section">
+                <h2>🔧 Troubleshooting Guides</h2>
+                <div class="cards">
+                    <div class="card" onclick="window.location.href='SitePal_Troubleshooting_Guide.html'">
+                        <div class="card-icon">🩹</div>
+                        <div class="card-meta">
+                            <span class="badge troubleshooting">Troubleshooting</span>
+                            <span class="status-indicator status-tested"></span>
+                            <span style="color: #666; font-size: 0.9em;">Already Tested</span>
+                        </div>
+                        <h3>SitePal Troubleshooting</h3>
+                        <p>
+                            Solutions for improving cartoon avatar quality in SitePal. Covers image optimization,
+                            custom character upload, API integration, and chatbot backend connection.
+                        </p>
+                        <p><strong>Fixes for:</strong></p>
+                        <ul style="margin-left: 20px; margin-bottom: 15px; color: #666;">
+                            <li>"Meh" looking cartoon avatars</li>
+                            <li>Poor lip sync quality</li>
+                            <li>Embedding issues</li>
+                            <li>AI integration setup</li>
+                        </ul>
+                        <div class="links">
+                            <a href="SitePal_Troubleshooting_Guide.html" class="btn">Fix SitePal Issues</a>
+                            <a href="SitePal_Troubleshooting_Guide.md" class="btn btn-secondary" download>Download MD</a>
+                        </div>
+                    </div>
+
+                    <div class="card" onclick="window.location.href='HeyGen_Troubleshooting_Guide.html'">
+                        <div class="card-icon">🔨</div>
+                        <div class="card-meta">
+                            <span class="badge troubleshooting">Troubleshooting</span>
+                            <span class="status-indicator status-tested"></span>
+                            <span style="color: #666; font-size: 0.9em;">Already Tested</span>
+                        </div>
+                        <h3>HeyGen Troubleshooting</h3>
+                        <p>
+                            Comprehensive solutions for HeyGen embed issues in slides.com. Covers Streaming Avatar
+                            SDK implementation, CORS fixes, custom hosting, and cartoon avatar creation.
+                        </p>
+                        <p><strong>Fixes for:</strong></p>
+                        <ul style="margin-left: 20px; margin-bottom: 15px; color: #666;">
+                            <li>Embed codes not working</li>
+                            <li>CORS/iframe restrictions</li>
+                            <li>Cartoon character quality</li>
+                            <li>Custom integration approach</li>
+                        </ul>
+                        <div class="links">
+                            <a href="HeyGen_Troubleshooting_Guide.html" class="btn">Fix HeyGen Issues</a>
+                            <a href="HeyGen_Troubleshooting_Guide.md" class="btn btn-secondary" download>Download MD</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Comparison -->
+            <div class="section">
+                <h2>📊 Quick Comparison Table</h2>
+                <div class="comparison-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Platform</th>
+                                <th>Monthly Cost</th>
+                                <th>Setup Difficulty</th>
+                                <th>Real-time</th>
+                                <th>Cartoon Support</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Convai + Unity</strong></td>
+                                <td>$50-200</td>
+                                <td>Medium-High</td>
+                                <td>✅ Yes</td>
+                                <td>✅ Yes</td>
+                                <td><span class="status-indicator status-new"></span> Recommended</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Voki</strong></td>
+                                <td>$7-50</td>
+                                <td>Low</td>
+                                <td>⚠️ With integration</td>
+                                <td>✅ Yes</td>
+                                <td><span class="status-indicator status-new"></span> Best for budget</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TalkingHead.js</strong></td>
+                                <td>$10-50</td>
+                                <td>High</td>
+                                <td>✅ Yes</td>
+                                <td>✅ Yes</td>
+                                <td><span class="status-indicator status-new"></span> Open-source</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SitePal</strong></td>
+                                <td>$10-200</td>
+                                <td>Low</td>
+                                <td>⚠️ Limited</td>
+                                <td>⚠️ Moderate</td>
+                                <td><span class="status-indicator status-tested"></span> Tested - "meh"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HeyGen</strong></td>
+                                <td>$120+</td>
+                                <td>Medium</td>
+                                <td>✅ Yes (SDK)</td>
+                                <td>⚠️ Limited</td>
+                                <td><span class="status-indicator status-tested"></span> Tested - embed issues</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Charisma.ai</strong></td>
+                                <td>$50-200</td>
+                                <td>Medium</td>
+                                <td>✅ Yes</td>
+                                <td>✅ Yes</td>
+                                <td><span class="status-indicator status-research"></span> Alternative option</td>
+                            </tr>
+                            <tr>
+                                <td><strong>D-ID</strong></td>
+                                <td>$5-30</td>
+                                <td>Low</td>
+                                <td>❌ No</td>
+                                <td>✅ Yes</td>
+                                <td><span class="status-indicator status-research"></span> Video only</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Resources -->
+            <div class="section">
+                <h2>🔗 External Resources</h2>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-icon">💬</div>
+                        <h3>Chatbase</h3>
+                        <p>AI chatbot platform with GPT-4 integration, embeddable widgets, and API access.</p>
+                        <div class="links">
+                            <a href="https://www.chatbase.co" target="_blank" class="btn">Visit Website</a>
+                            <a href="https://docs.chatbase.co" target="_blank" class="btn btn-secondary">Documentation</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🗣️</div>
+                        <h3>Voki</h3>
+                        <p>Educational avatar creation platform with text-to-speech and embedding capabilities.</p>
+                        <div class="links">
+                            <a href="https://l-www.voki.com" target="_blank" class="btn">Visit Website</a>
+                            <a href="https://l-www.voki.com/site/pricing" target="_blank" class="btn btn-secondary">Pricing</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">🎮</div>
+                        <h3>Convai</h3>
+                        <p>Conversational AI for interactive characters in games and virtual worlds.</p>
+                        <div class="links">
+                            <a href="https://www.convai.com" target="_blank" class="btn">Visit Website</a>
+                            <a href="https://docs.convai.com" target="_blank" class="btn btn-secondary">Documentation</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">👤</div>
+                        <h3>Ready Player Me</h3>
+                        <p>Avatar creation platform for creating custom 3D avatars, including cartoon styles.</p>
+                        <div class="links">
+                            <a href="https://readyplayer.me" target="_blank" class="btn">Visit Website</a>
+                            <a href="https://docs.readyplayer.me" target="_blank" class="btn btn-secondary">Documentation</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">💻</div>
+                        <h3>TalkingHead.js</h3>
+                        <p>Open-source JavaScript library for real-time avatar lip sync with Ready Player Me.</p>
+                        <div class="links">
+                            <a href="https://github.com/met4citizen/TalkingHead" target="_blank" class="btn">GitHub Repo</a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-icon">☁️</div>
+                        <h3>Deployment Platforms</h3>
+                        <p>Free hosting options for your avatar web applications.</p>
+                        <div class="links">
+                            <a href="https://vercel.com" target="_blank" class="btn">Vercel</a>
+                            <a href="https://netlify.com" target="_blank" class="btn btn-secondary">Netlify</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Items -->
+            <div class="section">
+                <h2>✅ Recommended Next Steps</h2>
+                <div style="background: #f8f9fa; padding: 30px; border-radius: 10px;">
+                    <h3 style="margin-bottom: 20px; color: #333;">Based on your requirements:</h3>
+                    <ol style="margin-left: 25px; line-height: 2; color: #666; font-size: 1.1em;">
+                        <li><strong>Test Voki</strong> (15-day free trial) - Quickest validation
+                            <ul style="margin-left: 20px; margin-top: 5px;">
+                                <li>Sign up at voki.com</li>
+                                <li>Create test avatar with your character</li>
+                                <li>Test embed in slides.com</li>
+                            </ul>
+                        </li>
+                        <li><strong>Set up Chatbase</strong> (Free tier available)
+                            <ul style="margin-left: 20px; margin-top: 5px;">
+                                <li>Create account at chatbase.co</li>
+                                <li>Configure language level (A1-B2)</li>
+                                <li>Test conversational flow</li>
+                            </ul>
+                        </li>
+                        <li><strong>Build simple prototype</strong>
+                            <ul style="margin-left: 20px; margin-top: 5px;">
+                                <li>Follow Voki + Chatbase Setup Guide</li>
+                                <li>Use Approach 1, Option B (simple side-by-side)</li>
+                                <li>Test with small group of students</li>
+                            </ul>
+                        </li>
+                        <li><strong>Evaluate alternatives</strong>
+                            <ul style="margin-left: 20px; margin-top: 5px;">
+                                <li>Review Convai if Unity is an option</li>
+                                <li>Consider TalkingHead.js for custom solution</li>
+                                <li>Compare costs and features</li>
+                            </ul>
+                        </li>
+                        <li><strong>Scale up</strong>
+                            <ul style="margin-left: 20px; margin-top: 5px;">
+                                <li>Choose best platform based on pilot results</li>
+                                <li>Implement full integration</li>
+                                <li>Deploy to production</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>🤖 AI Avatar Documentation Portal | Created: October 31, 2025</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                For questions or support, refer to the individual platform documentation or community forums.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Add click handlers for cards without explicit onclick
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.cursor = 'pointer';
+        });
+
+        // Highlight current page in navigation
+        const currentPath = window.location.pathname;
+        console.log('Documentation Portal Loaded');
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
